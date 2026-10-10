@@ -14,5 +14,14 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - name: Set up Chrome for browser E2E
+        id: chrome
+        uses: browser-actions/setup-chrome@v2
+        with:
+          chrome-version: stable
+          install-dependencies: true
+     
       - name: Validate, audit and browser smoke (no hosted credentials)
+        env:
+          E2E_BROWSER_BIN: ${{ steps.chrome.outputs.chrome-path }}
         run: npm run release:gate
