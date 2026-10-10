@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run launch:check",
+  
+"buildCommand": "npm run check:production-env && npm run verify && npm run audit && npm run audit:production",
   "outputDirectory": "dist",
   "framework": "vite",
   "headers": [
