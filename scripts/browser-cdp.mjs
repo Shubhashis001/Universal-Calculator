@@ -9,7 +9,10 @@ export async function startBrowser(executable) {
   const profile = mkdtempSync(join(tmpdir(),'uc-chromium-'));
   const flags=['--headless=new','--disable-gpu','--disable-dev-shm-usage','--disable-extensions',
     '--no-first-run','--no-default-browser-check','--remote-debugging-port=0',`--user-data-dir=${profile}`,'about:blank'];
-  if (process.getuid?.()===0) flags.unshift('--no-sandbox');
+  
+if (process.getuid?.() === 0 || process.env.GITHUB_ACTIONS === 'true') {
+  flags.unshift('--no-sandbox');
+}
   const processHandle=spawn(executable,flags,{stdio:'ignore'});
   try {
     let port;
