@@ -88,7 +88,8 @@ test('password generator includes requested groups, excludes ambiguous character
   for (let i = 0; i < 50; i++) {
     const password = generatePassword(16, options);
     assert.equal(password.length, 16); assert.doesNotMatch(password, /[O0Il1|]/);
-    for (const group of [/[A-Z]/, /[a-z]/, /\d/, /[^\w]/]) assert.match(password, group);
+    
+for (const group of [/[A-Z]/, /[a-z]/, /\d/, /[^A-Za-z0-9]/]) assert.match(password, group);
   }
   assert.throws(() => generatePassword(100000, options));
   assert.throws(() => generatePassword(16, { ...options, upper: false, lower: false, number: false, symbol: false }));
